@@ -21,7 +21,7 @@ class SongSeeder extends Seeder
             'songname' => 'F.N',
             'genre' => 'Hip-Hop',
             'img' => 'https://t2.genius.com/unsafe/234x234/https%3A%2F%2Fimages.genius.com%2F645587e20411c12f2423ab02c7a2ed56.1000x1000x1.jpg',
-            'duration' => '224',
+            'duration' => '00:03:44',
         ]);
 
         Song::create([
@@ -29,7 +29,7 @@ class SongSeeder extends Seeder
             'songname' => 'Epidemic',
             'genre' => 'Hip-Hop',
             'img' => 'https://t2.genius.com/unsafe/276x276/https%3A%2F%2Fimages.genius.com%2Fb0070d14be229e2f7fbcccf45ef68181.1000x1000x1.png',
-            'duration' => '178',
+            'duration' => '00:02:58',
         ]);
 
         Song::create([
@@ -37,7 +37,7 @@ class SongSeeder extends Seeder
             'songname' => 'In My Feelings',
             'genre' => 'Hip-Hop',
             'img' => 'https://t2.genius.com/unsafe/279x279/https%3A%2F%2Fimages.genius.com%2Fae0cd04ff9417b23861f674772ded07f.1000x1000x1.jpg',
-            'duration' => '199',
+            'duration' => '00:03:38',
         ]);
 
         Song::create([
@@ -45,7 +45,7 @@ class SongSeeder extends Seeder
             'songname' => 'Cold December',
             'genre' => 'Hip-Hop',
             'img' => 'https://t2.genius.com/unsafe/327x327/https%3A%2F%2Fimages.genius.com%2F5a5d6240552af5a85f1aef11b5abfda1.1000x1000x1.png',
-            'duration' => '193',
+            'duration' => '00:03:13',
         ]);
 
          //POP SONGS
@@ -55,7 +55,7 @@ class SongSeeder extends Seeder
             'songname' => 'Call Me Maybe',
             'genre' => 'Pop',
             'img' => 'https://t2.genius.com/unsafe/327x327/https%3A%2F%2Fimages.genius.com%2F283abd59015ade77f957552c4af32f76.1000x1000x1.jpg',
-            'duration' => '194',
+            'duration' => '00:03:14',
         ]);
 
         Song::create([
@@ -63,7 +63,7 @@ class SongSeeder extends Seeder
             'songname' => 'Blinding Lights',
             'genre' => 'Pop',
             'img' => 'https://t2.genius.com/unsafe/327x327/https%3A%2F%2Fimages.genius.com%2F22ca9d47b12db20bbfc88da431fba87b.1000x1000x1.png',
-            'duration' => '201',
+            'duration' => '00:03:21',
         ]);
 
         Song::create([
@@ -71,7 +71,7 @@ class SongSeeder extends Seeder
             'songname' => 'Umbrella',
             'genre' => 'Pop',
             'img' => 'https://t2.genius.com/unsafe/284x284/https%3A%2F%2Fimages.genius.com%2F9971bfbea4efdc425c909d8795c85dda.1000x1000x1.jpg',
-            'duration' => '257',
+            'duration' => '00:04:37',
         ]);
 
         Song::create([
@@ -79,7 +79,7 @@ class SongSeeder extends Seeder
             'songname' => 'Rolling in the Deep',
             'genre' => 'Pop',
             'img' => 'https://t2.genius.com/unsafe/327x327/https%3A%2F%2Fimages.genius.com%2F68266747aa7bd27b0055506437c13438.1000x1000x1.jpg',
-            'duration' => '229',
+            'duration' => '00:03:49',
         ]);
 
          //ROCK SONGS
@@ -89,7 +89,7 @@ class SongSeeder extends Seeder
             'songname' => 'Comfortably Numb',
             'genre' => 'Rock',
             'img' => 'https://t2.genius.com/unsafe/327x306/https%3A%2F%2Fimages.genius.com%2F22bab4e270d6297beeccc687f9197e81.600x561x1.jpg',
-            'duration' => '383',
+            'duration' => '00:06:23',
         ]);
 
         Song::create([
@@ -97,7 +97,7 @@ class SongSeeder extends Seeder
             'songname' => 'Smoke on the Water',
             'genre' => 'Rock',
             'img' => 'https://t2.genius.com/unsafe/327x327/https%3A%2F%2Fimages.genius.com%2Fbb865dcf124f908ed180cd82ae29bd60.600x600x1.jpg',
-            'duration' => '341',
+            'duration' => '00:05:41',
         ]);
 
         Song::create([
@@ -105,7 +105,7 @@ class SongSeeder extends Seeder
             'songname' => 'Kashmir',
             'genre' => 'Rock',
             'img' => 'https://t2.genius.com/unsafe/315x315/https%3A%2F%2Fimages.genius.com%2F5fcd5c712091d86147008e0de3b04630.1000x1000x1.jpg',
-            'duration' => '518',
+            'duration' => '00:08:38',
         ]);
 
         Song::create([
@@ -113,7 +113,7 @@ class SongSeeder extends Seeder
             'songname' => 'Gimme Shelter',
             'genre' => 'Rock',
             'img' => 'https://t2.genius.com/unsafe/327x327/https%3A%2F%2Fimages.genius.com%2F10295d9940ad3573ed1faed683d398a5.1000x1000x1.jpg',
-            'duration' => '271',
+            'duration' => '00:04:31',
         ]);
 
         //JAZZ SONGS
@@ -123,7 +123,7 @@ class SongSeeder extends Seeder
             'songname' => 'So What',
             'genre' => 'Jazz',
             'img' => 'https://t2.genius.com/unsafe/304x304/https%3A%2F%2Fimages.genius.com%2Fcda383ad971af6b01a55276657739341.1000x1000x1.jpg',
-            'duration' => '548',
+            'duration' => '00:09:08',
         ]);
 
         Song::create([
@@ -131,7 +131,7 @@ class SongSeeder extends Seeder
             'songname' => 'Fever',
             'genre' => 'Jazz',
             'img' => 'https://t2.genius.com/unsafe/276x276/https%3A%2F%2Fimages.genius.com%2F6042ad9230d2d435bbb6df03081f111b.1000x1000x1.jpg',
-            'duration' => '341',
+            'duration' => '00:03:24',
         ]);
 
         Song::create([
@@ -139,7 +139,7 @@ class SongSeeder extends Seeder
             'songname' => 'Summertime',
             'genre' => 'Jazz',
             'img' => 'https://t2.genius.com/unsafe/327x327/https%3A%2F%2Fimages.genius.com%2F83cfde922ed63f864df0f5e4d261aeff.381x381x1.jpg',
-            'duration' => '299',
+            'duration' => '00:04:59',
         ]);
 
         Song::create([
@@ -147,7 +147,7 @@ class SongSeeder extends Seeder
             'songname' => 'Strange Fruit',
             'genre' => 'Jazz',
             'img' => 'https://t2.genius.com/unsafe/327x327/https%3A%2F%2Fimages.genius.com%2F5c7580dafc235ade6805b5d1cf09ba8d.1000x1000x1.jpg',
-            'duration' => '191',
+            'duration' => '00:03:11',
         ]);
 
         //DANCE SONGS
@@ -157,7 +157,7 @@ class SongSeeder extends Seeder
             'songname' => 'One More Time',
             'genre' => 'Dance',
             'img' => 'https://t2.genius.com/unsafe/327x327/https%3A%2F%2Fimages.genius.com%2F1f68dda22b514be9e8b0555a49ac372b.1000x1000x1.png',
-            'duration' => '321',
+            'duration' => '00:05:21',
         ]);
 
         Song::create([
@@ -165,7 +165,7 @@ class SongSeeder extends Seeder
             'songname' => 'Wake Me Up',
             'genre' => 'Dance',
             'img' => 'https://t2.genius.com/unsafe/291x291/https%3A%2F%2Fimages.genius.com%2F458e6b68cac89d7f94a082f21fddf25c.1000x1000x1.png',
-            'duration' => '251',
+            'duration' => '00:04:10',
         ]);
 
         Song::create([
@@ -173,7 +173,7 @@ class SongSeeder extends Seeder
             'songname' => 'Gangnam Style',
             'genre' => 'Dance',
             'img' => 'https://t2.genius.com/unsafe/327x327/https%3A%2F%2Fimages.genius.com%2Fed62846fca4d8043ed3ebdfbb273d7f1.1000x1000x1.jpg',
-            'duration' => '220',
+            'duration' => '00:03:40',
         ]);
 
         Song::create([
@@ -181,7 +181,7 @@ class SongSeeder extends Seeder
             'songname' => 'Sandstorm',
             'genre' => 'Dance',
             'img' => 'https://t2.genius.com/unsafe/292x292/https%3A%2F%2Fimages.genius.com%2F2437bc26e1e6308905b165e4a98be6f4.700x700x1.jpg',
-            'duration' => '226',
+            'duration' => '00:03:46',
         ]);
     }
 }

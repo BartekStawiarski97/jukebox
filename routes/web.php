@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SongController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,9 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+
+Route::get('/', [SongController::class, 'index']);
+
+Route::get('/home', [SongController::class, 'index']);
 
 Route::get('/welcome', function () {
     return view('welcome');
@@ -37,7 +39,9 @@ Route::get('/register', function () {
     return view('register');
 });
 
+
+
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('/');
