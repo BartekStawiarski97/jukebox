@@ -48,7 +48,11 @@ class SongController extends Controller
      */
     public function show($id)
     {
-        //
+        $genre = DB::table('genres')->where('genres', 'Hip-Hop')->get();
+
+        return view('home', [
+            'genres' => $genres
+        ]);
     }
 
     /**
@@ -83,5 +87,52 @@ class SongController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function search()
+    {
+        if($_GET['sort'] == "all"){
+            return redirect('/');
+        }
+
+        if($_GET['sort'] == "hip-hop"){
+            $songs = DB::table('songs')->where('genre', 'hip-hop')->get();
+
+            return view('home', [
+                'songs' => $songs
+            ]);
+        }
+
+        if($_GET['sort'] == "pop"){
+            $songs = DB::table('songs')->where('genre', 'pop')->get();
+
+            return view('home', [
+                'songs' => $songs
+            ]);
+        }
+
+        if($_GET['sort'] == "rock"){
+            $songs = DB::table('songs')->where('genre', 'rock')->get();
+
+            return view('home', [
+                'songs' => $songs
+            ]);
+        }
+
+        if($_GET['sort'] == "jazz"){
+            $songs = DB::table('songs')->where('genre', 'jazz')->get();
+
+            return view('home', [
+                'songs' => $songs
+            ]);
+        }
+
+        if($_GET['sort'] == "dance"){
+            $songs = DB::table('songs')->where('genre', 'dance')->get();
+
+            return view('home', [
+                'songs' => $songs
+            ]);
+        }
     }
 }

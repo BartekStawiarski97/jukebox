@@ -5,7 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SavedList extends Model
+class Playlistitem extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];  
+
 }
