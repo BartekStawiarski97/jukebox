@@ -7,7 +7,7 @@
         	return "construct function was initialized.";
     	}
 
-    	public function addtoqueue($song){
+    	public function addToQueue($song){
 			if (session('songqueue') == null){
 				session()->put('songqueue', []);
 				session()->push('songqueue', $song);
@@ -16,7 +16,7 @@
 			}
     	}
 
-		public function removefromqueue($index){
+		public function removeFromQueue($index){
 			if (session('songqueue') == null){
 				return "queue empty";
 			} else {

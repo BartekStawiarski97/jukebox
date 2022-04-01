@@ -15,30 +15,23 @@ class PlaylistController extends Controller
 {
     //
     public function index(Request $request){
-        $playlists = '';
-        $playlistitems = '';
         $songs = Song::all();
-        $genres = Genre::all();
-        if(isset(Auth::user()->email)){
-            $playlists = Playlist::where('userid',$request->user()->id)->get();
-            $playlistitems = Playlistitem::all();
-
-        }
-       
+        $genres = Genre::all();     
         return view('playlist', [
             'songs' => $songs,
             'genres' => $genres,
-            'playlists' => $playlists,
-            'playlistitems' => $playlistitems,
         ]);
     }
+
+    /**
+     * Creates playlist with picked songs
+     */
 
     public function create(Request $request){
         $this->validate(request(), [
             'playlistname' => 'required',
             
         ]);
-        // var_dump($request->input());
         $songlist = array();
    
         foreach ($request->input() as $song){
@@ -49,112 +42,103 @@ class PlaylistController extends Controller
             }
         }
         $pname = $request->input('playlistname');
-        $userid = $request->user()->id;
-        
+        $user_id = $request->user()->id;
 
+        $playlist_id = Playlist::insertGetId(['name' => $pname, 'user_id' => $user_id]);
 
-        $playlistid = Playlist::insertGetId(
-            ['name' => $pname, 'userid' => $userid]
-        );
-        return $this->addsongs($songlist, $playlistid);
+        return $this->addSongs($songlist, $playlist_id);
     }
 
-    public function addsongs($list, $playlistid){
+    /**
+     * Playlist with picked songs
+     */
+
+    public function addSongs($list, $playlist_id){
         if($list == NULL){
             return redirect('/');
         }
-        var_dump($list);
-        echo $playlistid;
         foreach ($list as $item){
 
-            Playlistitem::create(['playlistid' => $playlistid, 'songid' => $item]);
-
+            Playlistitem::create(['playlist_id' => $playlist_id, 'song_id' => $item]);
         }
-        // var_dump($list);
         return redirect('/playlist');
     }
 
+    /**
+     * Make you able to create a playlist with songs from your queue
+     */
+
     public function save(Request $request){
-        // var_dump(session('songqueue'));
         $name = date('Y-m-d H:i:s').'_Queue';
         $totalsongs = count(session('songqueue'));
-        $userid = $request->user()->id;
+        $user_id = $request->user()->id;
 
-        $playlistid = Playlist::insertGetId(
-            ['name' => $name, 'userid' => $userid]
+        $playlist_id = Playlist::insertGetId(
+            ['name' => $name, 'user_id' => $user_id]
         );
+
         $p=0;
+
         for ($x = 0; $x < $totalsongs; $x++) {
-            Playlistitem::create(['playlistid' => $playlistid, 'songid' => session('songqueue')[$p]['id']]);
+            Playlistitem::create(['playlist_id' => $playlist_id, 'song_id' => session('songqueue')[$p]['id']]);
 
             $p = $p+1;
         }
-        // return redirect('/playlist');
-        return $this->playlistname($playlistid);
-
+        return $this->playlistName($playlist_id);
     }
 
-    public function playlistname($id){
+    /**
+     * Gives name to your playlist
+     */
+
+    public function playlistName($id){
         $name = Playlist::where('id',$id)->get();
         return view('playlistname', [
-            'playlistid' => $id,
+            'playlist_id' => $id,
             'name' => $name,
-        ]);
-       
+        ]);      
     }
 
-    public function newname(Request $request){
+    /**
+     * Change name of playlist
+     */
+
+    public function newName(Request $request){
         $this->validate(request(), [
             'playlistname' => 'required',
             
         ]);
-        $result = Playlist::where('userid', $request->user()->id)->where('id', $request->playlistid)->get();
+        $result = Playlist::where('user_id', $request->user()->id)->where('id', $request->playlist_id)->get();
         if ($result->isEmpty()) { 
-            return back()->with('error', 'Something went wrong');
+            return back()->with('error', 'You need to fill the field first');
         } else{
-            Playlist::where('userid', $request->user()->id)->where('id', $request->playlistid)->update(['name' => $request->input('playlistname')]);  
+            Playlist::where('user_id', $request->user()->id)->where('id', $request->playlist_id)->update(['name' => $request->input('playlistname')]);  
             return redirect('/playlist');
         }
-        
     }
 
-    public function delete($id){
-        Playlist::where('id',$id)->delete();
-
-
-        Playlistitem::where('playlistid',$id)->delete();
-
-        return redirect('/playlist');
+    /**
+     * Adds song to playlist
+     */
+       
+    public function addSong($id, $songId){
+        $playlists = Song::find($id);
+        $playlists->songs()->attach($songId);
     }
 
-    public function deletesong($id){
-        Playlistitem::where('id',$id)->delete();
+    /**
+     * Adds song to existing playlist
+     */
 
-        return redirect('/playlist');
-    }
-
-    public function addsong($id){
-        $pickedsongs = Playlistitem::where('playlistid', $id)->pluck('songid');
-        $songs = Song::all();
-        return view('playlistsongadd', [
-            'songs' => $songs,
-            'playlistid' => $id,
-            'pickedsongs' => $pickedsongs,
-        ]);
-    }
-
-    public function addsongtop(Request $request){
+     /*
+    public function addSongToPlaylist(Request $request){
         $songlist = array();
-        // var_dump($request->input());
-
         $items = $request->input();
         unset($items['_token']);
-        unset($items['playlistid']);
-        var_dump($items);
+        unset($items['playlist_id']);
 
     
         foreach ($items as $song){
-            // echo $song;
             if( $song>0){
                 array_push($songlist, $song);
             }   
@@ -164,10 +148,30 @@ class PlaylistController extends Controller
         if($songlist == NULL){
             return redirect('/');
         }
-        // var_dump($songlist);
         foreach ($songlist as $item){
-            Playlistitem::create(['playlistid' => $request->input('playlistid'), 'songid' => $item]);
+            Playlistitem::create(['playlist_id' => $request->input('playlist_id'), 'song_id' => $item]);
         }
+        return redirect('/playlist');
+    }
+
+    /**
+     * Deletes playlist
+     */
+    public function delete($id){
+        Playlist::where('id',$id)->delete();
+        Playlistitem::where('playlist_id',$id)->delete();
+
+        return redirect('/playlist');
+    }
+
+    /**
+     * Deletes song from the playlist
+     */
+
+    public function deleteSong($id, $songId){
+        $playlist = Playlist::find($id);
+        $playlist->songs()->detach($songId);
+
         return redirect('/playlist');
     }
 }

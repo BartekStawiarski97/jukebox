@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Playlistitem extends Model
 {
     use HasFactory;
-
+    
     protected $guarded = [];  
-
 }
