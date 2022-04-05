@@ -48,7 +48,6 @@ class QueueController extends Controller
         }else{
             $songQueue = session();
         }
-        //$songQueue = session('songqueue');
 
         //foreach song in the queue
         foreach($songQueue as $song){
