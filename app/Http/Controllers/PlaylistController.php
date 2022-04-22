@@ -16,10 +16,13 @@ class PlaylistController extends Controller
     //
     public function index(Request $request){
         $songs = Song::all();
-        $genres = Genre::all();     
+        $genres = Genre::all();
+        $playlistTime = $this->convertTime();
+
         return view('playlist', [
             'songs' => $songs,
             'genres' => $genres,
+            'playlistTime' => $playlistTime
         ]);
     }
 
@@ -173,44 +176,31 @@ class PlaylistController extends Controller
 
         return redirect('/playlist');
     }
-  
-    // public function playlist(){
-    //     $playlistTime = Playlistitem::where('id',$id)->get();
-    //     return view('playlistname', [
-    //         'playlist_id' => $id,
-    //         'song_id' => $id,
-    //         'playlistTime' => $this->convertTimePlaylist()
-    //     ]);
-    // }
 
-    // public function convertTimePlaylist(){
-    //     //variables
-    //     $minutes = 0;
-    //     $seconds = 0;
-    //     $extraMinutes = 0;
+    public function convertTime(){
+        //variables
+        $minutes = 0;
+        $seconds = 0;
+        $extraMinutes = 0;
 
-    //     if(session()->has('songqueue')){
-    //         $songQueue = session('songqueue');
-    //     }else{
-    //         $songQueue = session();
-    //     }
+        $songsInPlaylist = Playlistitem::select('*')->join('songs', 'songs.id', '=', 'playlistitems.song_id')->get();
 
-    //     //foreach song in the queue
-    //     foreach($songQueue as $song){
-    //         //Returns associative array with detailed info about given date/time
-    //         $convertedTime = date_parse($song->duration);
-    //         $minutes += $convertedTime['minute'];
-    //         $seconds += $convertedTime['second'];
-    //         //int div checks how many times it fits in the first given number
-    //         $extraMinutes = intdiv($seconds, 60);
-    //         $minutes += $extraMinutes;
-    //         //returns the remaining seconds
-    //         //100 : 60 = 40 because 60 can only fit in once in 100
-    //         $seconds = $seconds % 60;
+        //foreach song in the queue
+        foreach($songsInPlaylist as $song){
+            //Returns associative array with detailed info about given date/time
+            $convertedTime = date_parse($song->duration);
+            $minutes += $convertedTime['minute'];
+            $seconds += $convertedTime['second'];
+            //int div checks how many times it fits in the first given number
+            $extraMinutes = intdiv($seconds, 60);
+            $minutes += $extraMinutes;
+            //returns the remaining seconds
+            //100 : 60 = 40 because 60 can only fit in once in 100
+            $seconds = $seconds % 60;
             
-    //     }
-    //     $time = [ 'minute' => $minutes,'second' => $seconds];
-    //     return $time;
-    // }
+        }
+        $time = [ 'minute' => $minutes,'second' => $seconds];
+        return $time;
+    }
     
 }

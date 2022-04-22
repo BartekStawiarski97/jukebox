@@ -6,10 +6,11 @@
 	
 
 
-    @if(isset(Auth::user()->name))
+    @if(Auth::user())
+
     
         <div id="showyourplaylists" style="display: none;">
-            @foreach($playlists as $playlist)
+            @foreach(Auth::user()->playlists as $playlist)
                 <section>
                     <div class="col-5" style="margin-left:500px">
                         <h2 class="h1style">{{ $playlist->name }}</h2>
@@ -19,13 +20,13 @@
                         <a class="col-4 p-1 btn btn-success" href="/playlist/addsong/{{ $playlist->id }}">Add Song</a>
                         <a class="col-4 p-1 btn btn-danger" href="/playlist/delete/{{ $playlist->id }}">Delete Playlist</a>
                     </div>
+                    <div class="col-12">
+                        <h3 class="text-white mt-3" style="margin-left:35%">Playlist duration: {{$playlistTime['minute']. ' minutes and ' . $playlistTime['second']. ' seconds'}}</h3>
+                    </div>
                    
                     <div class="col-12">
                       <div class="row d-flex justify-content-between">
-                        @foreach($playlistitems as $item)                        
-                         @if($item->playlistid == $playlist->id)
-                            @foreach($songs as $song)
-                             @if($item->songid == $song->id)
+                        @foreach($playlist->songs as $song)                        
                              <div class="col-5">
                               <div class="homestyle">
                                 <img src="{{$song->img}}" class="songimage">
@@ -34,14 +35,11 @@
                                 <hr> 
                                 <p>{{$song->duration}}</p>
                                 <p>{{ $song->genre }}</p>
-                                <a class="col-3 btn btn-danger" href="/playlist/deletesong/{{ $item->id }}">Remove Song</a>                                                   
+                                <a class="col-3 btn btn-danger" href="/playlist/deletesong/{{ $playlist->id }}/{{$song->id }}">Remove Song</a>                                                   
                             </div>
                            </div>       
-                         @endif
-                       @endforeach
-                      @endif
-                     @endforeach
-                  </div>
+                        @endforeach
+                    </div>
                 </div>
                <hr style="margin-left: 120px">
               </section>
