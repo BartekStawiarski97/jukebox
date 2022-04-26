@@ -12,35 +12,13 @@
         <div id="showyourplaylists" style="display: none;">
             @foreach(Auth::user()->playlists as $playlist)
                 <section>
-                    <div class="col-5" style="margin-left:500px">
-                        <h2 class="h1style">{{ $playlist->name }}</h2>
+                    <div class="col-5" style="margin-left:520px">
+                        <h2 class="h1style"><a class="text-white" href="/playlistdetail/{{$playlist->id}}">{{$playlist->name}}</a></h2>
                     </div>
-                    <div class="row mt-3" style="margin-left:210px">
+                    <div class="row mt-3" style="margin-left:380px">
                         <a class="col-4 p-1 btn btn-secondary" href="/playlist/playlistname/{{ $playlist->id }}">Change Playlist Name</a>
-                        <a class="col-4 p-1 btn btn-success" href="/playlist/addsong/{{ $playlist->id }}">Add Song</a>
                         <a class="col-4 p-1 btn btn-danger" href="/playlist/delete/{{ $playlist->id }}">Delete Playlist</a>
                     </div>
-                    <div class="col-12">
-                        <h3 class="text-white mt-3" style="margin-left:35%">Playlist duration: {{$playlistTime['minute']. ' minutes and ' . $playlistTime['second']. ' seconds'}}</h3>
-                    </div>
-                   
-                    <div class="col-12">
-                      <div class="row d-flex justify-content-between">
-                        @foreach($playlist->songs as $song)                        
-                             <div class="col-5">
-                              <div class="homestyle">
-                                <img src="{{$song->img}}" class="songimage">
-                                <h3>{{ $song->artist }} </h3>
-                                <p>{{ $song->songname }}</p>
-                                <hr> 
-                                <p>{{$song->duration}}</p>
-                                <p>{{ $song->genre }}</p>
-                                <a class="col-3 btn btn-danger" href="/playlist/deletesong/{{ $playlist->id }}/{{$song->id }}">Remove Song</a>                                                   
-                            </div>
-                           </div>       
-                        @endforeach
-                    </div>
-                </div>
                <hr style="margin-left: 120px">
               </section>
             @endforeach

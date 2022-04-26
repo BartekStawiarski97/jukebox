@@ -5,7 +5,7 @@
 @section('content')
      <form method="post" action="{{ url('/playlist/addsongtop') }}">
         {{ csrf_field() }}
-		<input type="hidden" name="playlistid" value="{{ $playlistid }}" id="playlistid">
+		<input type="hidden" name="playlist_id" value="{{ $playlist_id }}" id="playlist_id">
             <section>
 			    <div class="col-12">
 				<div class="row d-flex justify-content-between">
