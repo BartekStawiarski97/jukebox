@@ -17,12 +17,10 @@ class PlaylistController extends Controller
     public function index(Request $request){
         $songs = Song::all();
         $genres = Genre::all();
-        $playlistTime = $this->convertTime();
 
         return view('playlist', [
             'songs' => $songs,
             'genres' => $genres,
-            'playlistTime' => $playlistTime
         ]);
     }
 
@@ -120,39 +118,16 @@ class PlaylistController extends Controller
         }
     }
 
+
     /**
      * Adds song to playlist
      */
-       
-    public function addSong($id, $songId){
-        $playlists = Song::find($id);
-        $playlists->songs()->attach($songId);
-    }
 
-    /**
-     * Adds song to existing playlist
-     */
+    public function addSongToPlaylist($id, $songId){
+        //gets playlist id and attaches the chosen song to the playlist
+        $playlist = Playlist::find($id);
+        $playlist->songs()->attach($songId);
 
-    public function addSongToPlaylist(Request $request){
-        $songlist = array();
-        $items = $request->input();
-        unset($items['_token']);
-        unset($items['playlist_id']);
-
-    
-        foreach ($items as $song){
-            if( $song>0){
-                array_push($songlist, $song);
-            }   
-  
-        }
-
-        if($songlist == NULL){
-            return redirect('/');
-        }
-        foreach ($songlist as $item){
-            Playlistitem::create(['playlist_id' => $request->input('playlist_id'), 'song_id' => $item]);
-        }
         return redirect('/playlist');
     }
 
@@ -177,13 +152,27 @@ class PlaylistController extends Controller
         return redirect('/playlist');
     }
 
-    public function convertTime(){
+    public function playlistinfo($id){
+        //gets the playlist id and the songs
+        //also runs the convertTime function
+        $playlist = Playlist::findOrFail($id);
+        $songs = Song::get();
+        $playlistTime = $this->convertTime($id);
+
+        return view('playlistinfo', [
+            'playlist' => $playlist,
+            'songs' => $songs,
+            'playlistTime' => $playlistTime
+        ]);
+    }
+
+    public function convertTime($id){
         //variables
         $minutes = 0;
         $seconds = 0;
         $extraMinutes = 0;
 
-        $songsInPlaylist = Playlistitem::select('*')->join('songs', 'songs.id', '=', 'playlistitems.song_id')->get();
+        $songsInPlaylist = Playlistitem::select('*')->join('songs', 'songs.id', '=', 'playlistitems.song_id')->where('playlist_id', $id)->get();
 
         //foreach song in the queue
         foreach($songsInPlaylist as $song){

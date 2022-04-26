@@ -31,6 +31,8 @@ Route::get('/queue/clear', 'App\Http\Controllers\QueueController@clearQueue');
 
 Route::get('/playlist', 'App\Http\Controllers\PlaylistController@index');
 
+Route::get('/playlistdetail/{id}', 'App\Http\Controllers\PlaylistController@playlistinfo');
+
 Route::post('/playlist/create', 'App\Http\Controllers\PlaylistController@create')->middleware('auth');
 
 Route::get('/playlist/save', 'App\Http\Controllers\PlaylistController@save')->middleware('auth');
@@ -43,9 +45,8 @@ Route::get('/playlist/delete/{id}', 'App\Http\Controllers\PlaylistController@del
 
 Route::get('/playlist/deletesong/{id}/{songId}', 'App\Http\Controllers\PlaylistController@deleteSong')->middleware('auth');
 
-Route::get('/playlist/addsong/{id}/{songId}', 'App\Http\Controllers\PlaylistController@addSong')->middleware('auth');
+Route::get('/playlist/addsong/{id}/{songId}', 'App\Http\Controllers\PlaylistController@addSongToPlaylist')->middleware('auth');
 
-Route::post('/playlist/addsongtop', 'App\Http\Controllers\PlaylistController@addSongToPlaylist')->middleware('auth');
 
 Route::get('/welcome', function () {
     return view('welcome');
