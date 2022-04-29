@@ -19,7 +19,8 @@ class QueueController extends Controller
     }
 
     public function clearQueue(){
-        session()->forget('songqueue');
+        $playlist = new Playlist();
+        $playlist->clearQueue();
         return redirect('/'); 
     }
 
@@ -31,39 +32,12 @@ class QueueController extends Controller
     }
 
     public function queue(){
+        $playlist = new Playlist();
         return view('queue', [
             'queue' => session('songqueue'),
-            'queueTime' => $this->convertTime()
+            'queueTime' => $playlist->convertTime()
         ]);
     }
 
-    public function convertTime(){
-        //variables
-        $minutes = 0;
-        $seconds = 0;
-        $extraMinutes = 0;
-
-        if(session()->has('songqueue')){
-            $songQueue = session('songqueue');
-        }else{
-            $songQueue = session();
-        }
-
-        //foreach song in the queue
-        foreach($songQueue as $song){
-            //Returns associative array with detailed info about given date/time
-            $convertedTime = date_parse($song->duration);
-            $minutes += $convertedTime['minute'];
-            $seconds += $convertedTime['second'];
-            //int div checks how many times it fits in the first given number
-            $extraMinutes = intdiv($seconds, 60);
-            $minutes += $extraMinutes;
-            //returns the remaining seconds
-            //100 : 60 = 40 because 60 can only fit in once in 100
-            $seconds = $seconds % 60;
-            
-        }
-        $time = [ 'minute' => $minutes,'second' => $seconds];
-        return $time;
-    }
+    
 }
