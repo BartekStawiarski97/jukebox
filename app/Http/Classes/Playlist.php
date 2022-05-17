@@ -1,30 +1,39 @@
 <?php 
 	
-	namespace App\Classes;
+	namespace App\Http\Classes;
 	
 	class Playlist{
- 		public function __construct() {
-        	return "construct function was initialized.";
-    	}
 
-    	public function addToQueue($song){
-			if (session('songqueue') == null){
-				session()->put('songqueue', []);
-				session()->push('songqueue', $song);
-			} else {
-				session()->push('songqueue', $song);
-			}
-    	}
+		private $sessionSongs;
+		private $request;
 
-		public function removeFromQueue($index){
-			if (session('songqueue') == null){
-				return "queue empty";
-			} else {
-				session()->forget('songqueue.'.$index);
+		public function __construct(Request $request){
+			$this->request = $request;
+
+			if ($request->session()->has('songQueue')) {
+			$this->$sessionSongs = $this->$request->session()->get('songQueue');
+		    }else{
+				$this->sessionsongs = [];
 			}
+	    }
+
+		public function syncSession(){
+			$this->request->session()->put('songQueue', $this->sessionSongs);
 		}
 
-		public function clearQueue(){
+		public function getAllSongs(){
+			return $this->sessionSongs;
+		}
+ 		
+    	public function addSong($songId){			
+			syncSession();
+    	}
+
+		public function removeSong($songId){
+			syncSession();
+		}
+
+		public function clearAll(){
 			session()->forget('songqueue');
 		}
 
