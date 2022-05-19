@@ -7,7 +7,7 @@
 		private $sessionSongs;
 		private $request;
 
-		public function __construct(Request $request){
+		public function ___construct(Request $request){
 			$this->request = $request;
 
 			if ($request->session()->has('songQueue')) {
@@ -25,16 +25,24 @@
 			return $this->sessionSongs;
 		}
  		
-    	public function addSong($songId){			
+    	public function addSong($songId){
+			$this->request->session()->push('songQueue', $songId);
+			
 			syncSession();
     	}
 
 		public function removeSong($songId){
+			if ($request->session()->has('songQueue') != null){
+			$this->request->session()->forget('songQueue', $songId);
+			}
 			syncSession();
 		}
 
+
 		public function clearAll(){
-			session()->forget('songqueue');
+			$this->request->session()->forget('songqueue');
+
+			syncSession();
 		}
 
 		public function convertTime(){
