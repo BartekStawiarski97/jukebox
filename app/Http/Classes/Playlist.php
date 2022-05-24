@@ -1,17 +1,18 @@
 <?php 
 	
 	namespace App\Http\Classes;
+	use Illuminate\Http\Request;
 	
 	class Playlist{
 
 		private $sessionSongs;
 		private $request;
 
-		public function ___construct(Request $request){
+		public function __construct(Request $request){
 			$this->request = $request;
 
-			if ($request->session()->has('songQueue')) {
-			$this->$sessionSongs = $this->$request->session()->get('songQueue');
+			if ($this->request->session()->has('songQueue')) {
+			$this->sessionSongs = $this->request->session()->get('songQueue');
 		    }else{
 				$this->sessionsongs = [];
 			}
@@ -28,21 +29,21 @@
     	public function addSong($songId){
 			$this->request->session()->push('songQueue', $songId);
 			
-			syncSession();
+			//syncSession();
     	}
 
 		public function removeSong($songId){
-			if ($request->session()->has('songQueue') != null){
+			if ($this->request->session()->has('songQueue') != null){
 			$this->request->session()->forget('songQueue', $songId);
 			}
-			syncSession();
+			//syncSession();
 		}
 
 
 		public function clearAll(){
 			$this->request->session()->forget('songqueue');
 
-			syncSession();
+			//syncSession();
 		}
 
 		public function convertTime(){
@@ -51,8 +52,8 @@
 			$seconds = 0;
 			$extraMinutes = 0;
 	
-			if(session()->has('songqueue')){
-				$songQueue = session('songqueue');
+			if(session()->has('songQueue')){
+				$songQueue = session('songQueue');
 			}else{
 				$songQueue = session();
 			}
