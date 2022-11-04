@@ -8,6 +8,8 @@
 		private $sessionSongs;
 		private $request;
 
+		/** Checks if the session has Queue */
+
 		public function __construct(Request $request){
 			$this->request = $request;
 
@@ -22,15 +24,22 @@
 			$this->request->session()->put('songQueue', $this->sessionSongs);
 		}
 
+		/** Gets all the songs from the queue in the session */
+
+
 		public function getAllSongs(){
 			return $this->sessionSongs;
 		}
  		
+		/** Adds song/songs to the Queue */
+
     	public function addSong($songId){
 			$this->request->session()->push('songQueue', $songId);
 			
 			//syncSession();
     	}
+
+		/** Removes song/songs to the Queue */
 
 		public function removeSong($songId){
 			if ($this->request->session()->has('songQueue') != null){
@@ -39,12 +48,16 @@
 			//syncSession();
 		}
 
+		/** Removes all songs from the queue */
+
 
 		public function clearAll(){
 			$this->request->session()->forget('songqueue');
 
 			//syncSession();
 		}
+
+		/** Shows total duration of the queue */
 
 		public function convertTime(){
 			//variables
@@ -75,6 +88,8 @@
 			$time = [ 'minute' => $minutes,'second' => $seconds];
 			return $time;
 		}
+
+		/** Creates queue session */
 
 		public function queueSession(){
 			if(session()->has('songqueue')){
